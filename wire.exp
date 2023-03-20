@@ -1,0 +1,5 @@
+#!/usr/bin/expect -f
+spawn ./wire.sh
+expect "Should non-superusers be able to capture packets?r"
+send -- yes
+expect eof
