@@ -1,4 +1,4 @@
-FROM jrei/systemd-ubuntu:18.04
+FROM ubuntu:18.04
 RUN apt update && apt install -y curl lsb-release gnupg software-properties-common
 #RUN apt install -y expect 
 #COPY lsb.sh lsb.exp $PWD

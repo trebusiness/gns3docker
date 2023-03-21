@@ -297,41 +297,41 @@ EOFI
 
     log "Start GNS3 service"
     systemctl enable gns3
-    systemctl start gns3
+#    systemctl start gns3 
 fi
 
 log "GNS3 installed with success"
 
-if [ $WELCOME_SETUP == 1 ]
-then
-NEEDRESTART_MODE=a apt-get install -y net-tools
-NEEDRESTART_MODE=a apt-get install -y python3-pip
-NEEDRESTART_MODE=a apt-get install -y dialog
-pip install --no-input --upgrade pip
-pip install --no-input pythondialog
-
-#Pull down welcome script from repo
-curl https://raw.githubusercontent.com/GNS3/gns3-server/master/scripts/welcome.py > /usr/local/bin/welcome.py
-
-chmod 755 /usr/local/bin/welcome.py
-chown gns3:gns3 /usr/local/bin/welcome.py
-
-mkdir /etc/systemd/system/getty@tty1.service.d
-cat <<EOFI > /etc/systemd/system/getty@tty1.service.d/override.conf
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty -a gns3 --noclear %I \$TERM
-EOFI
-
-chmod 755 /etc/systemd/system/getty@tty1.service.d/override.conf
-chown root:root /etc/systemd/system/getty@tty1.service.d/override.conf
-
-echo "python3 /usr/local/bin/welcome.py" >> /opt/gns3/.bashrc
-echo "gns3:gns3" | chpasswd
-usermod --shell /bin/bash gns3
-usermod -aG sudo gns3
-
-fi
+#if [ $WELCOME_SETUP == "1" ]
+#then
+#NEEDRESTART_MODE=a apt-get install -y net-tools
+#NEEDRESTART_MODE=a apt-get install -y python3-pip
+#NEEDRESTART_MODE=a apt-get install -y dialog
+#pip install --no-input --upgrade pip
+#pip install --no-input pythondialog
+#
+##Pull down welcome script from repo
+#curl https://raw.githubusercontent.com/GNS3/gns3-server/master/scripts/welcome.py > /usr/local/bin/welcome.py
+#
+#chmod 755 /usr/local/bin/welcome.py
+#chown gns3:gns3 /usr/local/bin/welcome.py
+#
+#mkdir /etc/systemd/system/getty@tty1.service.d
+#cat <<EOFI > /etc/systemd/system/getty@tty1.service.d/override.conf
+#[Service]
+#ExecStart=
+#ExecStart=-/sbin/agetty -a gns3 --noclear %I \$TERM
+#EOFI
+#
+#chmod 755 /etc/systemd/system/getty@tty1.service.d/override.conf
+#chown root:root /etc/systemd/system/getty@tty1.service.d/override.conf
+#
+#echo "python3 /usr/local/bin/welcome.py" >> /opt/gns3/.bashrc
+#echo "gns3:gns3" | chpasswd
+#usermod --shell /bin/bash gns3
+#usermod -aG sudo gns3
+#
+#fi
 
 if [ $USE_VPN == 1 ]
 then
@@ -455,11 +455,11 @@ log "Download http://$MY_IP_ADDR:8003/$UUID/$HOSTNAME.ovpn to setup your OpenVPN
 
 fi
 
-if [ $WELCOME_SETUP == 1 ]
-then
-NEEDRESTART_MODE=a apt-get update
-NEEDRESTART_MODE=a apt-get upgrade
-python3 -c 'import sys; sys.path.append("/usr/local/bin/"); import welcome; ws = welcome.Welcome_dialog(); ws.repair_remote_install()'
-cd /opt/gns3
-su gns3
-fi
+#if [ $WELCOME_SETUP == "1" ]
+#then
+#NEEDRESTART_MODE=a apt-get update
+#NEEDRESTART_MODE=a apt-get upgrade
+#python3 -c 'import sys; sys.path.append("/usr/local/bin/"); import welcome; ws = welcome.Welcome_dialog(); ws.repair_remote_install()'
+#cd /opt/gns3
+#su gns3
+#fi
