@@ -267,37 +267,37 @@ service gns3 stop
 set -e
 service gns3 start
 
-else
-    # Install systemd service
-    cat <<EOFI > /lib/systemd/system/gns3.service
-[Unit]
-Description=GNS3 server
-After=network-online.target
-Wants=network-online.target
-Conflicts=shutdown.target
-
-[Service]
-User=gns3
-Group=gns3
-PermissionsStartOnly=true
-EnvironmentFile=/etc/environment
-ExecStartPre=/bin/mkdir -p /var/log/gns3 /var/run/gns3
-ExecStartPre=/bin/chown -R gns3:gns3 /var/log/gns3 /var/run/gns3
-ExecStart=/usr/bin/gns3server --log /var/log/gns3/gns3.log
-ExecReload=/bin/kill -s HUP $MAINPID
-Restart=on-failure
-RestartSec=5
-LimitNOFILE=16384
-
-[Install]
-WantedBy=multi-user.target
-EOFI
-    chmod 755 /lib/systemd/system/gns3.service
-    chown root:root /lib/systemd/system/gns3.service
-
-    log "Start GNS3 service"
-    systemctl enable gns3
-#    systemctl start gns3 
+#else
+#    # Install systemd service
+#    cat <<EOFI > /lib/systemd/system/gns3.service
+#[Unit]
+#Description=GNS3 server
+#After=network-online.target
+#Wants=network-online.target
+#Conflicts=shutdown.target
+#
+#[Service]
+#User=gns3
+#Group=gns3
+#PermissionsStartOnly=true
+#EnvironmentFile=/etc/environment
+#ExecStartPre=/bin/mkdir -p /var/log/gns3 /var/run/gns3
+#ExecStartPre=/bin/chown -R gns3:gns3 /var/log/gns3 /var/run/gns3
+#ExecStart=/usr/bin/gns3server --log /var/log/gns3/gns3.log
+#ExecReload=/bin/kill -s HUP $MAINPID
+#Restart=on-failure
+#RestartSec=5
+#LimitNOFILE=16384
+#
+#[Install]
+#WantedBy=multi-user.target
+#EOFI
+#    chmod 755 /lib/systemd/system/gns3.service
+#    chown root:root /lib/systemd/system/gns3.service
+#
+#    log "Start GNS3 service"
+#    systemctl enable gns3
+#    service gns3.service start 
 fi
 
 log "GNS3 installed with success"
