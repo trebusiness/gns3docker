@@ -4,6 +4,7 @@ RUN cd /tmp
 COPY gns3-remote-install.sh $PWD
 RUN bash -x gns3-remote-install.sh --with-iou --with-i386-repository
 RUN apt install -y locales
+RUN apt install qemu-kvm libvirt-daemon-system
 RUN sed -i '/en_ZA.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen
 ENV LANG en_ZA.UTF-8  
